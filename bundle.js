@@ -3,7 +3,7 @@ const createTable = (rowNum,colNum,parentNode)=>{
   let table=document.createElement('table');
   table.classList.add('matrix__content');
   parentNode.appendChild(table);
-  console.log(rowNum, colNum);
+  
 
 
   for (let i = 0; i <=(rowNum-1); i++) {
@@ -27,5 +27,7 @@ createButton = document.querySelector('#createButton'),
 rowNum = document.querySelector('#rows').value,
 colNum = document.querySelector('#columns').value;
 
-
+rowNum.onchange = function(){rowNum = document.querySelector('#rows').value; console.log(rowNum, colNum);}
+colNum.onchange = function(){colNum = document.querySelector('#columns').value; console.log(rowNum, colNum);}
+createButton.addEventListener('click', function(){ createTable(rowNum, colNum, matrix);})
 
