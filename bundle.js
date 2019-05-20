@@ -19,15 +19,24 @@ const createTable = (rowNum,colNum,parentNode)=>{
   }
 }
 const removeTable = (parentNode) =>{
-  parentNode.removeChild();
+  parentNode.removeChild(parentNode.children[0]);
 }
 
 const matrix = document.querySelector('#matrix'),
 createButton = document.querySelector('#createButton'),
-rowNum = document.querySelector('#rows').value,
+rowEl = document.querySelector('#rows'),
+colEl = document.querySelector('#columns');
+let rowNum = document.querySelector('#rows').value,
 colNum = document.querySelector('#columns').value;
 
-rowNum.onchange = function(){rowNum = document.querySelector('#rows').value; console.log(rowNum, colNum);}
-colNum.onchange = function(){colNum = document.querySelector('#columns').value; console.log(rowNum, colNum);}
-createButton.addEventListener('click', function(){ createTable(rowNum, colNum, matrix);})
+const checkInput = (inputElement, highLim, lowLim) => {
+  const result = (inputElement.value <= highLim && inputElement.value >= lowLim) ?  inputElement.value : false;
+  return result;
+}
+rowEl.addEventListener('change', function(){rowNum = rowEl.value; });
+colEl.addEventListener('change', function(){colNum = colEl.value; })
+createButton.addEventListener('click', function(){ 
+  if (matrix.children.length > 0) {removeTable(matrix);} 
+  createTable(rowNum, colNum, matrix);
+})
 
