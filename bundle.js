@@ -61,29 +61,32 @@ let matrixArr = [
 //     });
 // console.log(indexArr);
 
-const findDomain=(index,arr)=>{
+const findDomain=(obj,x,y)=>{
  
   
-    console.log(`finded index is ${index}`);
+    console.log(`finded index is ${x,y}`);
     
-    arr.push(index);
+    obj.x=x;
+    obj.y=y;
+    return obj
 
 }
 
 
-matrixArr.forEach(function(item,i){
-  let domain = [];
-  item.forEach(
+matrixArr.forEach(function(itemY,indexY){
+  let domain = {};
+  itemY.forEach(
 
 
-    function(item,i){
+    function(item,indexX){
 
     if(item===1){
       
-      findDomain(i,domain);
+      findDomain(domain,indexX,indexY);
+      console.log(domain);
     }
     else{
-      console.log(domain);
+      
       return domain;
     }
   }
