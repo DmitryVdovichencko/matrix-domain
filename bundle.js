@@ -15,8 +15,10 @@ const createTable = (rowNum,colNum,parentNode)=>{
     for (let i = 0; i <=(rowNum-1); i++) {
         const td = table.rows[i].insertCell(0);
         td.classList.add('matrix__cell');
+        td.innerHTML=0;
     }
   }
+
 }
 const removeTable = (parentNode) =>{
   parentNode.removeChild(parentNode.children[0]);
@@ -24,6 +26,7 @@ const removeTable = (parentNode) =>{
 
 const matrix = document.querySelector('#matrix'),
 createButton = document.querySelector('#createButton'),
+manualButton = document.querySelector('#manualButton'),
 rowEl = document.querySelector('#rows'),
 colEl = document.querySelector('#columns');
 let rowNum = document.querySelector('#rows').value,
@@ -39,6 +42,59 @@ createButton.addEventListener('click', function(){
   if (matrix.children.length > 0) {removeTable(matrix);} 
   createTable(rowNum, colNum, matrix);
 })
+
+const enableManual=()=> {
+  let manualMode = false;
+  if (matrix.children.length > 0) {
+    manualButton.classList.toggle('active');
+    if (manualButton.classList.contains('active')) {
+      manualMode = true;
+      fillTable(document.querySelector('.matrix__content'));
+    }
+    else{
+      manualMode = false;
+    } 
+      
+  }
+  console.log(`Manual is ${manualMode}`);
+  return manualMode; 
+}
+
+const fillTable = (tableElement) => {
+  if(tableElement){
+    
+     tableElement.addEventListener('click', function(event){
+      console.log(event.target);
+      event.target.classList.toggle('active')
+      if (event.target.classList.contains('active')) {
+      event.target.innerHTML = 1;
+    }else{
+      event.target.innerHTML = 0;
+    }
+    getTableArr(tableElement);
+  })
+  }
+ 
+
+}
+manualButton.addEventListener('click', enableManual)
+const getTableArr = (table) => {
+  let tableArr = [];
+  for (let i = 0, row; row = table.rows[i]; i++) {
+   //iterate through rows
+   //rows would be accessed using the "row" variable assigned in the for loop
+   let rowArr=[];
+  
+   for (let j = 0, col; col = row.cells[j]; j++) {
+    rowArr.push(col.innerHTML);
+
+     //iterate through columns
+     //columns would be accessed using the "col" variable assigned in the for loop
+   }
+   tableArr.push(rowArr);  
+}
+console.log(tableArr);
+}
 //matrix logic
 //declare matrix as an array
 let matrixArr = [
@@ -81,13 +137,6 @@ matrixArr.forEach(function(itemY,indexY){
 })
 
 
-
-const checkDuplicatesArr = (arr,i) => {
- 
-
-    
-
-}
 
 
 const checkDomain=(arr, value)=>{
