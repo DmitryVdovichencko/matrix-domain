@@ -39,4 +39,53 @@ createButton.addEventListener('click', function(){
   if (matrix.children.length > 0) {removeTable(matrix);} 
   createTable(rowNum, colNum, matrix);
 })
+//matrix logic
+//declare matrix as an array
+let matrixArr = [
+[1,0,0,0,1,0],
+[1,1,0,0,0,1],
+[0,0,0,0,0,0],
+[0,0,0,0,0,1],
+[0,0,0,0,1,0],
+];
 
+// let indexArr=matrixArr.map(function(item,i){
+//      return item.map(function(item,i){
+//      if (item===1){
+//        return i;
+//      }else{
+//       return undefined;
+//      } 
+     
+//     });
+//     });
+// console.log(indexArr);
+
+const findDomain=(index,arr)=>{
+ 
+  
+    console.log(`finded index is ${index}`);
+    
+    arr.push(index);
+
+}
+
+
+matrixArr.forEach(function(item,i){
+  let domain = [];
+  item.forEach(
+
+
+    function(item,i){
+
+    if(item===1){
+      
+      findDomain(i,domain);
+    }
+    else{
+      console.log(domain);
+      return domain;
+    }
+  }
+  );
+})
