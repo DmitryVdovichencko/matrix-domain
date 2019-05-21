@@ -42,39 +42,29 @@ createButton.addEventListener('click', function(){
 //matrix logic
 //declare matrix as an array
 let matrixArr = [
-[1,0,0,0,1,0],
-[1,1,0,0,0,1],
-[0,0,0,0,0,0],
-[0,0,0,0,0,1],
-[0,0,0,0,1,0],
+[1,1,0,0,1,0],
+[1,0,0,0,0,1],
+[1,1,0,0,0,0],
+[0,1,0,0,0,1],
+[1,1,0,0,1,0],
 ];
 
-// let indexArr=matrixArr.map(function(item,i){
-//      return item.map(function(item,i){
-//      if (item===1){
-//        return i;
-//      }else{
-//       return undefined;
-//      } 
-     
-//     });
-//     });
-// console.log(indexArr);
 
-const findDomain=(obj,x,y)=>{
+
+const findPoints=(x,y)=>{
  
-  
-    console.log(`finded index is ${x,y}`);
+   let obj={};
+   
     
     obj.x=x;
     obj.y=y;
-    return obj
+    return obj;
 
 }
 
-
+let points=[];
 matrixArr.forEach(function(itemY,indexY){
-  let domain = {};
+ 
   itemY.forEach(
 
 
@@ -82,13 +72,98 @@ matrixArr.forEach(function(itemY,indexY){
 
     if(item===1){
       
-      findDomain(domain,indexX,indexY);
-      console.log(domain);
-    }
-    else{
+      points.push(findPoints(indexX,indexY));
       
-      return domain;
     }
+ 
   }
   );
 })
+
+
+
+const checkDuplicatesArr = (arr,i) => {
+ 
+
+    
+
+}
+
+
+const checkDomain=(arr, value)=>{
+  let domains=[],indexes=[];
+    arr.forEach(function(item,i,arr){
+      for (let j = 0; j < arr.length; j++) {
+        if (  ( (item.x - arr[j].x === value)&&(item.y===arr[j].y) )||
+          ( (item.y - arr[j].y === value)&&(item.x===arr[j].x) ) ) 
+        {
+          let domainArr=[];
+        
+          domainArr.push(item,arr[j]);
+          domains.push(domainArr); 
+        }
+
+
+
+      }
+     
+    })
+    domains.forEach(function(item,i,arr){
+      console.log(item.length);
+    });
+    
+ 
+  const deepCompare=(arr)=>{
+    for (let i= 0; i < arr.length-1; i++) {
+      if (i+1<=arr.length){
+        if(compare(arr[i],arr[i+1])){
+          arr[i] = [...new Set([...arr[i] ,...arr[i+1]])];
+          arr.splice((i+1),1);
+          return deepCompare(arr);
+        }
+        else {
+          return arr;
+        }      
+      }
+   }
+   
+  }
+
+
+   deepCompare(domains);
+   console.log("Points arr");
+   console.log(arr);
+
+   domains.forEach(function(item){
+    item.forEach(function(point){
+      points.splice(points.indexOf(point),1);
+    })
+   })
+   points = points.map(function(point) {
+    let item = [];
+    item.push(point);
+    return item;
+  });
+   domains=[...domains,...points] ;
+
+   console.log("Domains arr");
+   console.log(domains);
+
+}
+
+
+
+
+checkDomain(points,1);
+
+
+function compare(arr1,arr2){
+  return arr2.some(item=>
+    arr1.some(elem=>elem===item)
+    )
+  
+  
+}
+
+console.log(`compare result is ${compare([1,2,3],[3,5,0])}`);
+// true
