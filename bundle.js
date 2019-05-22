@@ -1,4 +1,4 @@
-
+// creating table function
 const createTable = (rowNum,colNum,parentNode)=>{
   let table=document.createElement('table');
   table.classList.add('matrix__content');
@@ -18,31 +18,45 @@ const createTable = (rowNum,colNum,parentNode)=>{
         td.innerHTML=0;
     }
   }
+  autoButton.addEventListener('click', function(){ autoFillTable(document.querySelector('.matrix__content'),prob) });
 
 }
+
+//remove table function
 const removeTable = (parentNode) =>{
   parentNode.removeChild(parentNode.children[0]);
 }
 
+
+
+//get control elements and rowNum with colNum for table
 const matrix = document.querySelector('#matrix'),
 createButton = document.querySelector('#createButton'),
 manualButton = document.querySelector('#manualButton'),
+autoButton = document.querySelector('#autoButton'),
+probEl = document.querySelector('#prob')
 rowEl = document.querySelector('#rows'),
 colEl = document.querySelector('#columns');
 let rowNum = document.querySelector('#rows').value,
-colNum = document.querySelector('#columns').value;
+colNum = document.querySelector('#columns').value,
+prob = probEl.value;
 
+//validation function
 const checkInput = (inputElement, highLim, lowLim) => {
   const result = (inputElement.value <= highLim && inputElement.value >= lowLim) ?  inputElement.value : false;
   return result;
 }
+
+//add event listeners for changing table and create table
 rowEl.addEventListener('change', function(){rowNum = rowEl.value; });
-colEl.addEventListener('change', function(){colNum = colEl.value; })
+colEl.addEventListener('change', function(){colNum = colEl.value; });
+probEl.addEventListener('change', function(){prob = probEl.value; });
 createButton.addEventListener('click', function(){ 
   if (matrix.children.length > 0) {removeTable(matrix);} 
   createTable(rowNum, colNum, matrix);
 })
 
+// enable manual mode function
 const enableManual=()=> {
   let manualMode = false;
   if (matrix.children.length > 0) {
@@ -59,7 +73,7 @@ const enableManual=()=> {
   console.log(`Manual is ${manualMode}`);
   return manualMode; 
 }
-
+// filling table in manual mode function
 const fillTable = (tableElement) => {
   if(tableElement){
     
@@ -77,7 +91,10 @@ const fillTable = (tableElement) => {
  
 
 }
-manualButton.addEventListener('click', enableManual)
+//add event listener for manual mode button
+manualButton.addEventListener('click', enableManual);
+
+//get table data
 const getTableArr = (table) => {
   let tableArr = [];
   for (let i = 0, row; row = table.rows[i]; i++) {
@@ -94,6 +111,7 @@ const getTableArr = (table) => {
    tableArr.push(rowArr);  
 }
 console.log(tableArr);
+return tableArr;
 }
 //matrix logic
 //declare matrix as an array
@@ -106,7 +124,7 @@ let matrixArr = [
 ];
 
 
-
+// get object for points 
 const findPoints=(x,y)=>{
  
    let obj={};
@@ -117,7 +135,28 @@ const findPoints=(x,y)=>{
     return obj;
 
 }
+// function to get points with 1 from array
 
+const getPoints = (arr)=>{
+  let points=[];
+  arr.forEach(function(itemY,indexY){
+ 
+    itemY.forEach(
+
+
+      function(item,indexX){
+
+      if(item===1){
+        
+        points.push(findPoints(indexX,indexY));
+        
+      }
+   
+    }
+    );
+  });
+  return points;
+}
 let points=[];
 matrixArr.forEach(function(itemY,indexY){
  
@@ -138,7 +177,7 @@ matrixArr.forEach(function(itemY,indexY){
 
 
 
-
+// check domain for points with 1
 const checkDomain=(arr, value)=>{
   let domains=[],indexes=[];
     arr.forEach(function(item,i,arr){
@@ -197,7 +236,9 @@ const checkDomain=(arr, value)=>{
 
    console.log("Domains arr");
    console.log(domains);
-
+   console.log("Domains count is");
+   console.log(domains.length);
+   return domains;
 }
 
 
@@ -217,6 +258,10 @@ function compare(arr1,arr2){
 console.log(`compare result is ${compare([1,2,3],[3,5,0])}`);
 // true
 
+
+
+
+//Auto mode
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
@@ -231,9 +276,50 @@ const randomProb = (prob,result1,result2)=> {
     }
   }
 }
-for (var i = 0; i < 100; i++) {
-  if(randomProb(0.01,1,0)===1){
-    console.log(1)
-  }
+
+const clearTable = (table) => {
   
+  for (let i = 0, row; row = table.rows[i]; i++) {
+   //iterate through rows
+   //rows would be accessed using the "row" variable assigned in the for loop
+   
+  
+   for (let j = 0, col; col = row.cells[j]; j++) {
+    col.innerHTML=0;
+    if (col.classList.contains('active')){
+      col.classList.remove('active');
+    }
+
+     //iterate through columns
+     //columns would be accessed using the "col" variable assigned in the for loop
+   }
+    
 }
+}
+
+const autoFillTable = (table,prob) => {
+  clearTable(table);
+  console.log(`prob is ${prob}`)
+  for (let i = 0, row; row = table.rows[i]; i++) {
+   //iterate through rows
+   //rows would be accessed using the "row" variable assigned in the for loop
+   
+  
+   for (let j = 0, col; col = row.cells[j]; j++) {
+    col.innerHTML=randomProb(prob,1,0);
+       //iterate through columns
+     //columns would be accessed using the "col" variable assigned in the for loop
+   }
+    
+}
+}
+
+
+// for (var i = 0; i < 100; i++) {
+//   if(randomProb(0.01,1,0)===1){
+//     console.log(1)
+//   }
+  
+// }
+
+
