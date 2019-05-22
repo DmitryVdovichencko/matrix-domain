@@ -216,3 +216,24 @@ function compare(arr1,arr2){
 
 console.log(`compare result is ${compare([1,2,3],[3,5,0])}`);
 // true
+
+function getRndInteger(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+const randomProb = (prob,result1,result2)=> {
+  const chances = (1-prob)*100;
+  for (let i = 0; i < chances; i++) {
+    if (i===getRndInteger(0,chances)||i===getRndInteger(0,chances)){
+      return result1;
+    }
+    else{
+      return result2;
+    }
+  }
+}
+for (var i = 0; i < 100; i++) {
+  if(randomProb(0.01,1,0)===1){
+    console.log(1)
+  }
+  
+}
