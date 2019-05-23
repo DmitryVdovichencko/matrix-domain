@@ -95,7 +95,7 @@ arr.forEach(function(itemY,indexY){
   }
   );
 })
-	console.log(points);
+	
   return points;
 }
 
@@ -117,7 +117,7 @@ const compare= (arr1,arr2)=>{
           return deepCompare(arr);
         }
         else {
-        	console.log(arr);
+        	
           return arr;
         }      
       }
@@ -164,10 +164,7 @@ const checkDomain=(arr, value)=>{
   });
    domains=[...domains,...pointsDomain] ;
 
-   console.log("Domains arr");
-   console.log(domains);
-   console.log("Domains count is");
-   console.log(domains.length);
+   
    return domains;
 }
 
@@ -212,7 +209,7 @@ const queueArr=(arr, length, ...results)=>{
 
 		
 	
-	console.log(arr);
+	
 	return arr;
 }
 
@@ -283,7 +280,7 @@ const clearTable = (table) => {
 //function to auto filling table
 const autoFillTable = (table,prob) => {
   clearTable(table);
-  console.log(`prob is ${prob}`)
+  
   for (let i = 0, row; row = table.rows[i]; i++) {
    //iterate through rows
    //rows would be accessed using the "row" variable assigned in the for loop
