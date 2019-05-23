@@ -14,12 +14,24 @@
 		<input class="control__field" type="number" name="columns" id="columns"  min="1" max="40">
 		<button class="control__button" id="createButton">Создать матрицу</button>
 		<button class="control__button" id="manualButton">Заполнить вручную</button>
+		<button class="control__button" id="checkButton">Посчитать домены</button>
 		<input class="control__field" type="number" name="columns" id="prob"  min=0.01 max=0.99>
 		<button class="control__button" id="autoButton">Заполнить автоматически</button>
 	</div>
 	
 	<div id="matrix">
+
 	</div>
-	<script type="text/javascript" src="bundle.js"></script>
+	<div class="result">
+		<div class="result__domain" id="output"></div>
+		<table class="result__table" id="domainTable">
+			<tr>
+				<th>Вероятность</th>
+				<th>Количество доменов в матрице</th>
+				<th>Количество ячеек в матрице (N*M)</th>
+			</tr>
+		</table>
+	</div>
+	<script type="text/javascript" src="script.js"></script>
 </body>
 </html>
