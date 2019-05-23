@@ -61,6 +61,13 @@ button:focus {
     color:#fff;
 }
 .matrix__cell.active{
-	background: green;
-    color:#fff;
+/*	background: green;
+    color:#fff;*/
+}
+.result__table{
+    border:solid 1px lightgrey;
+}
+th{
+     border:solid 1px lightgrey;
+     font-weight: normal;
 }

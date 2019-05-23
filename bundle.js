@@ -123,7 +123,7 @@ let matrixArr = [
 [0,1,0,0,0,1],
 [1,1,0,0,1,0],
 ];
-
+console.log(matrixArr);
 
 // get object for points 
 const findPoints=(x,y)=>{
@@ -158,6 +158,7 @@ const getPoints = (arr)=>{
   });
   return points;
 }
+console.log(getPoints(matrixArr));
 let points=[];
 matrixArr.forEach(function(itemY,indexY){
  

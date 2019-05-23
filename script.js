@@ -117,6 +117,7 @@ const compare= (arr1,arr2)=>{
           return deepCompare(arr);
         }
         else {
+        	console.log(arr);
           return arr;
         }      
       }
@@ -129,8 +130,8 @@ const checkDomain=(arr, value)=>{
   let domains=[],indexes=[];
     arr.forEach(function(item,i,arr){
       for (let j = 0; j < arr.length; j++) {
-        if (  ( (item.x - arr[j].x === value)&&(item.y===arr[j].y) )||
-          ( (item.y - arr[j].y === value)&&(item.x===arr[j].x) ) ) 
+        if (  ( (Math.abs(item.x - arr[j].x) === value)&&(item.y===arr[j].y) )||
+          ( (Math.abs(item.y - arr[j].y) === value)&&(item.x===arr[j].x) ) ) 
         {
           let domainArr=[];
         
@@ -176,20 +177,64 @@ const findDomain=(table)=>{
 }
 // function for domain cells background
 const visualDomain = (table, domains)=>{
+
+	for (let i = 0, row; row = table.rows[i]; i++) {
+   
+  
+   for (let j = 0, col; col = row.cells[j]; j++) {
+	  if(col.style){
+	  	col.removeAttribute("style");
+	  }
+
+     //iterate through columns
+     //columns would be accessed using the "col" variable assigned in the for loop
+   }
+    
+}
+
     domains.forEach(function(domain){
+    	let r=getRndInteger(0,255), b=getRndInteger(0,255), g=getRndInteger(0,255);
         domain.forEach(function(point){
-           table.rows[point.y].cells[point.x].style.background="#233";
+         	
+           table.rows[point.y].cells[point.x].style.background=`rgb(${r},${g},${b})`;
           table.rows[point.y].cells[point.x].style.color="white";
         })
      
     })
 }
+const queueArr=(arr, length, ...results)=>{
+	
+	arr.push(results);
+	if(arr.length>length){
+		
+		arr.shift();
+	}
 
-const outputResult = (autoMode, outputEl, domainTable,inputTable, domainsArr)=>{
+		
+	
+	console.log(arr);
+	return arr;
+}
+
+
+const outputResult = (autoMode, outputEl, domainTable,inputTable, domainsArr,prob,resultsArr)=>{
 	outputEl.innerHTML=domainsArr.length;
 	visualDomain(inputTable,domainsArr);
 	if (autoMode){
-
+		let sizeInputTable = inputTable.rows.length*inputTable.rows[0].cells.length,
+		resTableArr = queueArr(resultsArr,10, prob, domainsArr.length,sizeInputTable);
+		for (let i = 0; i < resTableArr.length; i++) {
+			resTableArr[i].forEach(function(item,index){
+				domainTable.rows[i+1].cells[index].innerHTML=item;
+			})
+			
+			// let row = domainTable.insertRow(-1);
+			// resTableArr.forEach(function(item,index){
+			// 	let cell = row.insertCell(index);
+			// 	cell.innerHTML = item;
+			// })
+			
+		}
 
 	}
 	
@@ -226,6 +271,9 @@ const clearTable = (table) => {
   
    for (let j = 0, col; col = row.cells[j]; j++) {
     col.innerHTML=0;
+      if(col.style){
+	  	col.removeAttribute("style");
+	  }
     if (col.classList.contains('active')){
       col.classList.remove('active');
     }
@@ -265,9 +313,8 @@ manualButton = document.querySelector('#manualButton'),
 autoButton = document.querySelector('#autoButton'),
 checkButton = document.querySelector('#checkButton'),
 outputEl = document.querySelector('#output'),
-outputTable = document.querySelector('#outputTable'),
-domainTable = document.querySelector('#domainTable')
-probEl = document.querySelector('#prob')
+domainTable = document.querySelector('#domainTable'),
+probEl = document.querySelector('#prob'),
 rowEl = document.querySelector('#rows'),
 colEl = document.querySelector('#columns');
 let rowNum = document.querySelector('#rows').value,
@@ -279,6 +326,7 @@ prob = probEl.value;
 
 
 const control = () =>{
+	let domainTableArr=[];
 	//add event listeners for changing table and create table
 	rowEl.addEventListener('change', function(){rowNum = rowEl.value; });
 	colEl.addEventListener('change', function(){colNum = colEl.value; });
@@ -286,19 +334,20 @@ const control = () =>{
 	createButton.addEventListener('click', function(){ 
 	  if (matrix.children.length > 0) {removeTable(matrix);} 
 	  createTable(rowNum, colNum, matrix);
-	  const inputTable = document.querySelector('.matrix__content')
+	  const inputTable = document.querySelector('.matrix__content');
 	  manualButton.addEventListener('click', function(){
 
 	  	autoMode = false;
 	  	fillTable(inputTable);
-	  	checkButton.addEventListener('click', function(){outputResult(autoMode, outputEl, domainTable,inputTable, findDomain(inputTable))});
+	  	// checkButton.addEventListener('click', function(){outputResult(autoMode, outputEl, domainTable,inputTable, findDomain(inputTable))});
 	  });
 	  autoButton.addEventListener('click', function(){
 	  	autoMode = true;
 	  	autoFillTable(inputTable,prob);
-	  	checkButton.addEventListener('click', function(){outputResult(autoMode, outputEl, domainTable,inputTable, findDomain(inputTable))});
+	  	
 	  });
+	  checkButton.addEventListener('click', function(){outputResult(autoMode, outputEl, domainTable,inputTable, findDomain(inputTable),prob,domainTableArr)});
 	})
-	
+
 }
 control();
