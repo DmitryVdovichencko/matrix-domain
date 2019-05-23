@@ -66,8 +66,19 @@ button:focus {
 }
 .result__table{
     border:solid 1px lightgrey;
+    border-collapse: collapse;
 }
 th{
      border:solid 1px lightgrey;
      font-weight: normal;
+     padding:10px;
+}
+td{
+     border:solid 1px lightgrey;
+     text-align: center;
+     padding:5px;
+}
+.control__box{
+    display:flex;
+    flex-flow:row wrap;
 }

@@ -95,7 +95,7 @@ arr.forEach(function(itemY,indexY){
   }
   );
 })
- 
+	console.log(points);
   return points;
 }
 
@@ -109,7 +109,7 @@ const compare= (arr1,arr2)=>{
 }
 //function for deep compare nested arr
   const deepCompare=(arr)=>{
-    for (let i= 0; i < arr.length-1; i++) {
+    for (let i = 0; i < arr.length-1; i++) {
       if (i+1<=arr.length){
         if(compare(arr[i],arr[i+1])){
           arr[i] = [...new Set([...arr[i] ,...arr[i+1]])];
@@ -127,7 +127,7 @@ const compare= (arr1,arr2)=>{
 
 // check domain for points with 1
 const checkDomain=(arr, value)=>{
-  let domains=[],indexes=[];
+  let domains=[];
     arr.forEach(function(item,i,arr){
       for (let j = 0; j < arr.length; j++) {
         if (  ( (Math.abs(item.x - arr[j].x) === value)&&(item.y===arr[j].y) )||
@@ -157,12 +157,12 @@ const checkDomain=(arr, value)=>{
       arr.splice(arr.indexOf(point),1);
     })
    })
-  let points = arr.map(function(point) {
+  let pointsDomain = arr.map(function(point) {
     let item = [];
     item.push(point);
     return item;
   });
-   domains=[...domains,...points] ;
+   domains=[...domains,...pointsDomain] ;
 
    console.log("Domains arr");
    console.log(domains);
@@ -228,11 +228,7 @@ const outputResult = (autoMode, outputEl, domainTable,inputTable, domainsArr,pro
 				domainTable.rows[i+1].cells[index].innerHTML=item;
 			})
 			
-			// let row = domainTable.insertRow(-1);
-			// resTableArr.forEach(function(item,index){
-			// 	let cell = row.insertCell(index);
-			// 	cell.innerHTML = item;
-			// })
+		
 			
 		}
 
@@ -251,7 +247,7 @@ function getRndInteger(min, max) {
 }
 //function to get random int with certain probability
 const randomProb = (prob,result1,result2)=> {
-  const chances = (1-prob)*100;
+  const chances = 2/prob;
   for (let i = 0; i < chances; i++) {
     if (i===getRndInteger(0,chances)||i===getRndInteger(0,chances)){
       return result1;
@@ -322,31 +318,38 @@ colNum = document.querySelector('#columns').value,
 autoMode,
 prob = probEl.value;
 
+//validation
 
+
+	
 
 
 const control = () =>{
 	let domainTableArr=[];
-	//add event listeners for changing table and create table
-	rowEl.addEventListener('change', function(){rowNum = rowEl.value; });
+//add event listeners for changing table and create table
+	rowEl.addEventListener('change', function(){rowNum = rowEl.value;});
 	colEl.addEventListener('change', function(){colNum = colEl.value; });
-	probEl.addEventListener('change', function(){prob = probEl.value; console.log(prob) });
+	probEl.addEventListener('change', function(){prob = probEl.value; });
+	//validation
 	createButton.addEventListener('click', function(){ 
-	  if (matrix.children.length > 0) {removeTable(matrix);} 
-	  createTable(rowNum, colNum, matrix);
-	  const inputTable = document.querySelector('.matrix__content');
-	  manualButton.addEventListener('click', function(){
+		
+			if (matrix.children.length > 0) {removeTable(matrix);} 
+			  createTable(rowNum, colNum, matrix);
+			  const inputTable = document.querySelector('.matrix__content');
+			  manualButton.addEventListener('click', function(){
 
 	  	autoMode = false;
 	  	fillTable(inputTable);
 	  	// checkButton.addEventListener('click', function(){outputResult(autoMode, outputEl, domainTable,inputTable, findDomain(inputTable))});
-	  });
-	  autoButton.addEventListener('click', function(){
-	  	autoMode = true;
-	  	autoFillTable(inputTable,prob);
-	  	
-	  });
-	  checkButton.addEventListener('click', function(){outputResult(autoMode, outputEl, domainTable,inputTable, findDomain(inputTable),prob,domainTableArr)});
+		  });
+		  autoButton.addEventListener('click', function(){
+		  	autoMode = true;
+		  	autoFillTable(inputTable,prob);
+		  	
+		  });
+		  checkButton.addEventListener('click', function(){outputResult(autoMode, outputEl, domainTable,inputTable, findDomain(inputTable),prob,domainTableArr)});
+		
+	
 	})
 
 }

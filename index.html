@@ -10,20 +10,33 @@
 	<h1>Матрица доменов</h1>
 	<p>Введите размерность матрицы:</p>
 	<div class="control">
-		<input class="control__field" type="number" name="rows" id="rows" min="1" max="40">
-		<input class="control__field" type="number" name="columns" id="columns"  min="1" max="40">
-		<button class="control__button" id="createButton">Создать матрицу</button>
+
+	<div class="control__box">
+
+		<div class="control__element">
+				<label for="rows">Число строк:</label>
+					<input class="control__field" type="number" name="rows" id="rows" min="1" max="40">
+		</div>
+		<div class="control__element">
+			<label for="columns">Число столбцов:</label>
+			<input class="control__field" type="number" name="columns" id="columns"  min="1" max="40">
+			<button class="control__button" id="createButton">Создать матрицу</button>
+				</div>
+		</div>
 		<button class="control__button" id="manualButton">Заполнить вручную</button>
-		<button class="control__button" id="checkButton">Посчитать домены</button>
+		
+		<label for="prob">Вероятность автоматического заполнения:</label>
 		<input class="control__field" type="number" name="columns" id="prob"  min=0.01 max=0.99>
 		<button class="control__button" id="autoButton">Заполнить автоматически</button>
+		<button class="control__button" id="checkButton">Посчитать домены</button>
+
 	</div>
 	
 	<div id="matrix">
 
 	</div>
 	<div class="result">
-		<div class="result__domain" id="output"></div>
+		<div class="result__field">Число доменов в матрице составляет <span class="result__domain" id="output"></span></div>
 		<table class="result__table" id="domainTable">
 			<tr>
 				<th>Вероятность</th>
